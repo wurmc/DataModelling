@@ -4,7 +4,7 @@
     <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
-        <mxCell id="cdzxTDHdXINh_g30sIHG-1" value="Location"
+        <mxCell id="cdzxTDHdXINh_g30sIHG-1" value="Position"
                 style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;"
                 parent="1" vertex="1">
             <mxGeometry x="160" y="40" width="140" height="78" as="geometry"/>
