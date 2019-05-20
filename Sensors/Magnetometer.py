@@ -21,4 +21,6 @@ def getRelData(line):
                 help = ""
             else:
                 help += char
+
+                
     return rel_data_Magnet
