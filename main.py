@@ -14,6 +14,7 @@ from Sensors import Pressure
 from Sensors import Satellite
 from Sensors import Wifi
 
+
 # Help functions:
 # create function, which asks user for choice of file including the absolute path of it
 def selectExFile():
@@ -35,6 +36,7 @@ def choseSensor(x):
             "Please enter an integer of 1 to 9 (1: Bluetooth, 2: Cell, 3: , 4: Location, 5: Magnetometer, 6: Orientation, 7: Pressure, 8: Satellite, 9: Wifi): "))
     return x
 
+
 # create function, which calls the getRelData method of the sensor
 def selectSensor(x, line):
     if (x == 1):
@@ -43,9 +45,9 @@ def selectSensor(x, line):
     elif (x == 2):
         rel_data_tmp = Cell.getRelData(line)
         return rel_data_tmp
-    # elif (x == 3):
-    # rel_data_tmp =.getRelData(line)
-    # return rel_data_tmp
+    elif (x == 3):
+        rel_data_tmp = Light.getRelData(line)
+        return rel_data_tmp
     elif (x == 4):
         rel_data_tmp = Location.getRelData(line)
         return rel_data_tmp
