@@ -6,6 +6,7 @@
 
 from Sensors import Bluetooth
 from Sensors import Cell
+from Sensors import Light
 from Sensors import Location
 from Sensors import Magnetometer
 from Sensors import Orientation
