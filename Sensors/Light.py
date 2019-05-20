@@ -1,9 +1,9 @@
 
-# class for measured Magnetometer data,
+# class for measured Light data,
 # such as the sensor event value as float
 
 def getRelData(line):
-    rel_data_Magnet = ""
+    rel_data_Light = ""
     # go through line and save relevant data in new string
     print(line)
     counter = 1
@@ -17,8 +17,8 @@ def getRelData(line):
             if (char == ";"):
                 counter += 1
                 help += char
-                rel_data_Magnet += help
+                rel_data_Light += help
                 help = ""
             else:
                 help += char
-    return rel_data_Magnet
+    return rel_data_Light
