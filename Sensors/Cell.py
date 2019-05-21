@@ -1,23 +1,45 @@
-
 # class for measured Cell data,
 # such as the type (LTE etc.), the PCI and related RSRP
 
-# TODO: something is not correct yet
 def getRelData(line):
     rel_data_Cell = ""
     # go through line and save relevant data in new string
     print(line)
     counter = 1
+    counter2 = 0
     help = ""
+    help2 = ""
     for char in line:
         if (
-                counter == 3 or counter == 4 or counter == 6 or counter == 7 or counter == 8 or counter == 9 or
-                counter == 11 or counter == 12 or counter == 14 or counter == 16 or counter == 17 or counter == 18 or
-                counter == 19 or counter == 21 or counter == 2 or counter == 24):
+                counter == 3 or counter == 4):
             if (char == ";"):
                 counter += 1
-        elif ((counter == 5 or counter == 15 or counter == 25) and help == "LTE"):
-            if (char == ";"):
+        elif (counter == 5 or counter == 22 or counter == 39 or counter == 56 or counter == 73 or counter == 90 or
+              counter == 107 or counter == 124 or counter == 141 or counter == 158):
+            if (help == "GSM"):
+                help2 = help
+                counter2 = counter
+                counter += 1
+                help += char
+                rel_data_Cell += help
+                help = ""
+            elif (help == "CDMA"):
+                help2 = help
+                counter2 = counter
+                counter += 1
+                help += char
+                rel_data_Cell += help
+                help = ""
+            elif (help == "LTE"):
+                help2 = help
+                counter2 = counter
+                counter += 1
+                help += char
+                rel_data_Cell += help
+                help = ""
+            elif (help == "WCDMA"):
+                help2 = help
+                counter2 = counter
                 counter += 1
                 help += char
                 rel_data_Cell += help
@@ -26,11 +48,44 @@ def getRelData(line):
                 help += char
         else:
             if (char == ";"):
-                counter += 1
-                help += char
-                rel_data_Cell += help
-                help = ""
+                if (help2 == "GSM"):
+                    if (counter == counter2 + 2 or counter == counter2 + 7):
+                        counter += 1
+                        help += char
+                        rel_data_Cell += help
+                        help = ""
+                    else:
+                        counter += 1
+                elif (help2 == "CDMA"):
+                    if (counter == counter2 + 2 or counter == counter2 + 11):
+                        counter += 1
+                        help += char
+                        rel_data_Cell += help
+                        help = ""
+                    else:
+                        counter += 1
+                elif (help2 == "LTE"):
+                    if (counter == counter2 + 5 or counter == counter2 + 8):
+                        counter += 1
+                        help += char
+                        rel_data_Cell += help
+                        help = ""
+                    else:
+                        counter += 1
+                elif (help2 == "WCDMA"):
+                    if (counter == counter2 + 2 or counter == counter2 + 8):
+                        counter += 1
+                        help += char
+                        rel_data_Cell += help
+                        help = ""
+                    else:
+                        counter += 1
+                else:
+                    counter += 1
+                    help += char
+                    rel_data_Cell += help
+                    help = ""
             else:
                 help += char
+    print("success")
     return rel_data_Cell
-
