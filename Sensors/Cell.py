@@ -56,6 +56,7 @@ def getRelData(line):
                         help = ""
                     else:
                         counter += 1
+                        help = ""
                 elif (help2 == "CDMA"):
                     if (counter == counter2 + 2 or counter == counter2 + 11):
                         counter += 1
@@ -64,6 +65,7 @@ def getRelData(line):
                         help = ""
                     else:
                         counter += 1
+                        help = ""
                 elif (help2 == "LTE"):
                     if (counter == counter2 + 5 or counter == counter2 + 8):
                         counter += 1
@@ -72,6 +74,7 @@ def getRelData(line):
                         help = ""
                     else:
                         counter += 1
+                        help = ""
                 elif (help2 == "WCDMA"):
                     if (counter == counter2 + 2 or counter == counter2 + 8):
                         counter += 1
@@ -80,6 +83,7 @@ def getRelData(line):
                         help = ""
                     else:
                         counter += 1
+                        help = ""
                 else:
                     counter += 1
                     help += char
@@ -87,5 +91,4 @@ def getRelData(line):
                     help = ""
             else:
                 help += char
-    print("success")
     return rel_data_Cell

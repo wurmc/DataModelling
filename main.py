@@ -1,4 +1,3 @@
-
 # contains all function calls and main functionality to structure the project
 
 # TODO:
@@ -34,7 +33,7 @@ def selectNewFile():
 def choseSensor(x):
     while (x < 1 or x > 9):
         x = int(input(
-            "Please enter an integer of 1 to 9 (1: Bluetooth, 2: Cell, 3: , 4: Location, 5: Magnetometer, 6: Orientation, 7: Pressure, 8: Satellite, 9: Wifi): "))
+            "Please enter an integer of 1 to 9 (1: Bluetooth, 2: Cell, 3: Light, 4: Location, 5: Magnetometer, 6: Orientation, 7: Pressure, 8: Satellite, 9: Wifi): "))
     return x
 
 

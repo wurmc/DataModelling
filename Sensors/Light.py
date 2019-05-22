@@ -1,4 +1,3 @@
-
 # class for measured Light data,
 # such as the sensor event value as float
 
@@ -17,6 +16,10 @@ def getRelData(line):
             if (char == ";"):
                 counter += 1
                 help += char
+                rel_data_Light += help
+                help = ""
+            elif (char == "\n"):
+                counter += 1
                 rel_data_Light += help
                 help = ""
             else:
