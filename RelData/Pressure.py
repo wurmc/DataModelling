@@ -9,7 +9,7 @@ def getRelData(line):
     help = ""
     for char in line:
         if (
-                counter == 3):
+                counter == 2 or counter == 3):
             if (char == ";"):
                 counter += 1
         else:

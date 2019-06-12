@@ -11,7 +11,7 @@ def getRelData(line):
     help2 = ""
     for char in line:
         if (
-                counter == 3 or counter == 4):
+                counter == 2 or counter == 3 or counter == 4):
             if (char == ";"):
                 counter += 1
         elif (counter == 5 or counter == 22 or counter == 39 or counter == 56 or counter == 73 or counter == 90 or
@@ -20,28 +20,24 @@ def getRelData(line):
                 help2 = help
                 counter2 = counter
                 counter += 1
-                help += char
                 rel_data_Cell += help
                 help = ""
             elif (help == "CDMA"):
                 help2 = help
                 counter2 = counter
                 counter += 1
-                help += char
                 rel_data_Cell += help
                 help = ""
             elif (help == "LTE"):
                 help2 = help
                 counter2 = counter
                 counter += 1
-                help += char
                 rel_data_Cell += help
                 help = ""
             elif (help == "WCDMA"):
                 help2 = help
                 counter2 = counter
                 counter += 1
-                help += char
                 rel_data_Cell += help
                 help = ""
             else:

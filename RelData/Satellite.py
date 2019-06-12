@@ -9,7 +9,7 @@ def getRelData(line):
     help = ""
     for char in line:
         if (
-                counter == 3 or counter == 6 or counter == 7 or counter == 10 or counter == 11 or counter == 14 or
+                counter == 2 or counter == 3 or counter == 6 or counter == 7 or counter == 10 or counter == 11 or counter == 14 or
                 counter == 15 or counter == 18 or counter == 19 or counter == 22 or counter == 23 or counter == 26 or
                 counter == 27 or counter == 30 or counter == 31 or counter == 34 or counter == 35 or counter == 38 or
                 counter == 3 or counter == 42 or counter == 43 or counter == 46 or counter == 47 or counter == 50 or
