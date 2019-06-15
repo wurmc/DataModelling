@@ -17,27 +17,12 @@
 #  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 #  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# class for measured Bluetooth data,
-# such as the address and related RSSI
+# WLAN info
 
-def get_rel_data(line):
-    rel_data_bt = ""
-    # go through line and save relevant data in new string
-    print(line)
-    counter = 1
-    tmp = ""
-    for char in line:
-        if (
-                counter == 2 or counter == 3 or counter == 4 or counter == 7 or counter == 10 or counter == 13 or
-                counter == 16 or counter == 19 or counter == 22 or counter == 25 or counter == 28 or counter == 31):
-            if (char == ";"):
-                counter += 1
-        else:
-            if (char == ";"):
-                counter += 1
-                tmp += char
-                rel_data_bt += tmp
-                tmp = ""
-            else:
-                tmp += char
-    return rel_data_bt
+
+class WLAN:
+    """WLAN info"""
+
+    def __init__(self, id="", signal=0.0):
+        self.BSSID = id
+        self.RSSI = signal
