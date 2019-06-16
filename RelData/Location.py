@@ -20,23 +20,40 @@
 # class for measured Location data,
 # such as the Latitude and the Longitude
 
+# def get_rel_data(line):
+#     rel_data_loc = ""
+#     # go through line and save relevant data in new string
+#     print(line)
+#     counter = 1
+#     tmp = ""
+#     for char in line:
+#         if (
+#                 counter == 2 or counter == 3 or counter == 4 or counter == 7):
+#             if (char == ";"):
+#                 counter += 1
+#         else:
+#             if (char == ";"):
+#                 counter += 1
+#                 tmp += char
+#                 rel_data_loc += tmp
+#                 tmp = ""
+#             else:
+#                 tmp += char
+#     return rel_data_loc
+
+
 def get_rel_data(line):
     rel_data_loc = ""
     # go through line and save relevant data in new string
     print(line)
-    counter = 1
-    tmp = ""
-    for char in line:
-        if (
-                counter == 2 or counter == 3 or counter == 4 or counter == 7):
-            if (char == ";"):
-                counter += 1
-        else:
-            if (char == ";"):
-                counter += 1
-                tmp += char
-                rel_data_loc += tmp
-                tmp = ""
-            else:
-                tmp += char
-    return rel_data_loc
+    arr_line = line.split(";")
+    counter = 4
+    rel_data_loc += arr_line[0]
+    rel_data_loc += ";"
+    while (counter < len(arr_line)):
+        rel_data_loc += arr_line[counter]
+        rel_data_loc += ";"
+        rel_data_loc += arr_line[counter + 1]
+        rel_data_loc += ";"
+        counter += 3
+    return rel_data_loc[:-1]

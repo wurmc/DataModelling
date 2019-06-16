@@ -52,12 +52,12 @@ def set_pos_id():
 # take first lines of w, b, c and find out, which timestamp is the smallest, save them in list to sort?
 # therefor extraction of timestamps (13 digits) needed
 def find_min_time(w_line, b_line, c_line):
-    min_time = min(int(w_line[:12]), int(b_line[:12]), (c_line[:12]))
+    min_time = min(int(w_line[:13]), int(b_line[:13]), int(c_line[:13]))
     return min_time
 
 
 def find_max_time(w_line, b_line, c_line):
-    max_time = max(int(w_line[:12]), int(b_line[:12]), (c_line[:12]))
+    max_time = max(int(w_line[:13]), int(b_line[:13]), int(c_line[:13]))
     return max_time
 
 
@@ -72,7 +72,7 @@ def find_time(time, index, arr_w_lines, arr_b_lines, arr_c_lines):
 
 def find_index(time, diff, arr):
     for el in arr:
-        if (time <= el[:12] < (time + diff)):
+        if (time <= int(el[:13]) < (time + diff)):
             return arr.index(el)
         else:
             return -1
@@ -83,9 +83,12 @@ def find_index(time, diff, arr):
 # main function to assemble a fingerprint
 def assemble_fingerprint():
     # read data from files: WLAN, BT, Cells
-    wlan_file_path = select_file_path("WLAN")
-    bt_file_path = select_file_path("BT")
-    cell_file_path = select_file_path("Cell")
+    # wlan_file_path = select_file_path("WLAN")
+    wlan_file_path = "E:/Clara/Studium/Master/MA/Datenverarbeitung/20190519_Verarbeitungskette/20190616_Test_Fingerprint_Assembly/User_Hand_1306191731499629_WiFi__154358522871920__0.csv"
+    # bt_file_path = select_file_path("BT")
+    bt_file_path = "E:/Clara/Studium/Master/MA/Datenverarbeitung/20190519_Verarbeitungskette/20190616_Test_Fingerprint_Assembly/User_Hand_1306191731499629_Bluetooth__154358544046191__0.csv"
+    # cell_file_path = select_file_path("Cell")
+    cell_file_path = "E:/Clara/Studium/Master/MA/Datenverarbeitung/20190519_Verarbeitungskette/20190616_Test_Fingerprint_Assembly/User_Hand_1306191731499629_Cells__154358527039733__0.csv"
 
     # open source files
     wlan_file = open(wlan_file_path, "r")
@@ -127,12 +130,17 @@ def assemble_fingerprint():
         # take first lines of w, b, c and find out, which timestamp is the smallest, save them in list to sort?
         # therefor extraction of timestamps (13 digits) needed
         # set min_time = smallest timestamp of 1st sensor
+        # print("WLAN: ", arr_wlan_lines[0])
+        # print("BT: ", arr_bt_lines[0])
+        # print("Cell: ", arr_cell_lines[0])
         min_time = find_min_time(arr_wlan_lines[0], arr_bt_lines[0], arr_cell_lines[0])
         arr = find_time(min_time, 0, arr_wlan_lines, arr_bt_lines, arr_cell_lines)
 
         # take 2nd timestamp of sensor with smallest 1st timestamp (reference sensor) and calculate difference
-        help_time = int(arr[1][:12])
-        diff = help_time - min_time
+        if (len(arr) >= 2):
+            help_time = int(arr[1][:13])
+            diff = help_time - min_time
+            # print(diff)
 
         # check if timestamps of sensors are in between 1st and 2nd timestamp of reference sensor
         # take data of all sensors which is between 1st and 2nd timestamp of reference sensor as start point for fingerprint assembly
@@ -148,25 +156,26 @@ def assemble_fingerprint():
         max_time = find_max_time(arr_wlan_lines[w_arr_index], arr_bt_lines[b_arr_index], arr_cell_lines[c_arr_index])
 
         # initialise fingerprint with position ID and time index
-        fp = Fingerprint.Fingrprint(pos_id)
+        fp = Fingerprint.Fingerprint(pos_id)
         fp.index = i
         # set timestamps belonging to time index
         fp.minTime = min_time
         fp.maxTime = max_time
         # set WLAN, BT and Cell value arrays
         if (w_arr_index != -1):
-            FingerprintRestoration.set_wlan_data(fp, arr_wlan_lines[w_arr_index], 1)
+            fp = FingerprintRestoration.set_wlan_data(fp, arr_wlan_lines[w_arr_index], 1)
             # delete parsed array elements !!
             del arr_wlan_lines[w_arr_index]
         if (b_arr_index != -1):
-            FingerprintRestoration.set_bt_data(fp, arr_bt_lines[b_arr_index], 1)
+            fp = FingerprintRestoration.set_bt_data(fp, arr_bt_lines[b_arr_index], 1)
             # delete parsed array elements !!
             del arr_bt_lines[b_arr_index]
         if (c_arr_index != -1):
-            FingerprintRestoration.set_cell_data(fp, arr_cell_lines[c_arr_index], 1)
+            fp = FingerprintRestoration.set_cell_data(fp, arr_cell_lines[c_arr_index], 1)
             # delete parsed array elements !!
             del arr_cell_lines[c_arr_index]
         arr_fp.append(fp)
+        # print(arr_fp[i])
         # min_time = 0
         # max_time = 0
 

@@ -20,7 +20,7 @@
 # start of help functions
 def set_file_path():
     file_path = str(input(
-        "Please enter absolute file path including the name of the file you want to create for storing the fingerprints"))
+        "Please enter absolute file path including the name of the file you want to create for storing the fingerprints: "))
     return file_path
 
 
@@ -32,30 +32,40 @@ def store_fingerprint(arr_fp):
     fp_file = open(file_path, "a")
     for fp in arr_fp:
         # append metadata to file
-        fp_file.write("fp;")
-        fp_file.write(fp.posID + ";")
-        fp_file.write(fp.index + ";")
-        fp_file.write(fp.minTime + ";")
-        fp_file.write(fp.maxTime + "\n")
+        fp_file.write("FP;")
+        fp_file.write(fp.posID)
+        fp_file.write(";")
+        fp_file.write(str(fp.index))
+        fp_file.write(";")
+        fp_file.write(str(fp.minTime))
+        fp_file.write(";")
+        fp_file.write(str(fp.maxTime))
+        fp_file.write("\n")
 
         # append WLAN data to file
         fp_file.write("WLAN;")
         for wlan in fp.wlans:
-            fp_file.write(wlan.BSSID + ";")
-            fp_file.write(wlan.RSSI + ";")
+            fp_file.write(wlan.BSSID)
+            fp_file.write(";")
+            fp_file.write(str(wlan.RSSI))
+            fp_file.write(";")
         fp_file.write("\n")
 
         # append BT data to file
         fp_file.write("BT;")
         for bt in fp.bts:
-            fp_file.write(bt.MAC + ";")
-            fp_file.write(bt.RSSI + ";")
+            fp_file.write(bt.MAC)
+            fp_file.write(";")
+            fp_file.write(str(bt.RSSI))
+            fp_file.write(";")
         fp_file.write("\n")
 
         # append Cell data to file
         fp_file.write("Cell;")
         for cell in fp.cells:
-            fp_file.write(cell.typeID + ";")
-            fp_file.write(cell.RSRP + ";")
+            fp_file.write(cell.typeID)
+            fp_file.write(";")
+            fp_file.write(str(cell.RSRP))
+            fp_file.write(";")
         fp_file.write("\n")
     fp_file.close()

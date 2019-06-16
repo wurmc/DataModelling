@@ -20,23 +20,37 @@
 # class for measured Orientation data,
 # such as the quanternion value as float
 
+# def get_rel_data(line):
+#     rel_data_orient = ""
+#     # go through line and save relevant data in new string
+#     print(line)
+#     counter = 1
+#     tmp = ""
+#     for char in line:
+#         if (
+#                 counter == 2 or counter == 3):
+#             if (char == ";"):
+#                 counter += 1
+#         else:
+#             if (char == ";"):
+#                 counter += 1
+#                 tmp += char
+#                 rel_data_orient += tmp
+#                 tmp = ""
+#             else:
+#                 tmp += char
+#     return rel_data_orient
+
 def get_rel_data(line):
     rel_data_orient = ""
     # go through line and save relevant data in new string
     print(line)
-    counter = 1
-    tmp = ""
-    for char in line:
-        if (
-                counter == 2 or counter == 3):
-            if (char == ";"):
-                counter += 1
-        else:
-            if (char == ";"):
-                counter += 1
-                tmp += char
-                rel_data_orient += tmp
-                tmp = ""
-            else:
-                tmp += char
-    return rel_data_orient
+    arr_line = line.split(";")
+    counter = 3
+    rel_data_orient += arr_line[0]
+    rel_data_orient += ";"
+    while(counter < len(arr_line)):
+        rel_data_orient += arr_line[counter]
+        rel_data_orient += ";"
+        counter += 1
+    return rel_data_orient[:-1]

@@ -107,7 +107,7 @@ def select_rel_data():
     # read data from txt files line by line
     ef_lines = ef.readlines()
     for line in ef_lines:
-        print(line);
+        # print(line);
 
         # call specific sensor to select and return relevant data
         rel_data = select_sensor(x, line)

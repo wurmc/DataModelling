@@ -30,150 +30,64 @@ def select_file_path():
     return file_path
 
 
-def set_meta_data(FP, line):
-    tmp = ""
-    counter = 0
-    for char in line:
-        if (counter == 0):
-            if (char == ";"):
-                counter += 1
-        elif (counter == 1):
-            if (char == ";"):
-                counter += 1
-                FP.posID = tmp
-                tmp = ""
-            else:
-                tmp += char
-        elif (counter == 2):
-            if (char == ";"):
-                counter += 1
-                FP.index = tmp
-                tmp = ""
-            else:
-                tmp += char
-        elif (counter == 3):
-            if (char == ";"):
-                counter += 1
-                FP.minTime = tmp
-                tmp = ""
-            else:
-                tmp += char
-        elif (counter == 4):
-            if (char == ";"):
-                counter += 1
-                FP.maxTime = tmp
-                tmp = ""
-            else:
-                tmp += char
-    return FP
+def set_meta_data(fp, line):
+    arr_line = line.split(";")
+    fp.posID = arr_line[1]
+    fp.index = int(arr_line[2])
+    fp.minTime = int(arr_line[3])
+    fp.maxTime = int(arr_line[4])
+    return fp
 
 
 # function to set the measured values of WLAN. Called with the fingerprint FP, the line string and an int for: 1:storation, 2:restoration. Returning the fingerprint with new data added
-def set_wlan_data(FP, line, int):
-    tmp_wlan = WLAN()
-    tmp = ""
-    counter = 0
-    elemcounter = 0
-    for char in line:
-        if (counter == 0):
-            if (char == ";"):
-                counter += 1
-        elif (counter % 2 == 1):
-            if (char == ";"):
-                counter += 1
-                tmp_wlan.BSSID = tmp
-                elemcounter += 1
-                tmp = ""
-            else:
-                tmp += char
-        elif (counter % 2 == 0):
-            if (char == ";"):
-                counter += 1
-                if (int == 1):
-                    tmp_wlan.RSSI = FingerprintAssembly.delog(float(tmp))
-                elif (int == 2):
-                    tmp_wlan.RSSI = float(tmp)
-                elemcounter += 1
-                tmp = ""
-            else:
-                tmp += char
-        if (elemcounter != 0 and elemcounter % 2 == 0):
-            FP.wlans.append(tmp_wlan)
-            tmp_wlan.BSSID = ""
-            tmp_wlan.RSSI = 0.0
-    return FP
+def set_wlan_data(fp, line, num):
+    arr_line = line.split(";")
+    counter = 1
+    while ((counter + 1) < len(arr_line)):
+        tmp_wlan = WLAN.WLAN()
+        tmp_wlan.BSSID = arr_line[counter]
+        if (num == 1):
+            tmp_wlan.RSSI = FingerprintAssembly.delog(float(arr_line[counter + 1]))
+        elif (num == 2):
+            tmp_wlan.RSSI = float(arr_line[counter + 1])
+        counter += 2
+        fp.wlans.append(tmp_wlan)
+        del tmp_wlan
+    return fp
 
 
 # function to set the measured values of BT. Called with the fingerprint FP, the line string and an int for: 1:storation, 2:restoration. Returning the fingerprint with new data added
-def set_bt_data(FP, line, int):
-    tmp_bt = BT()
-    tmp = ""
-    counter = 0
-    elemcounter = 0
-    for char in line:
-        if (counter == 0):
-            if (char == ";"):
-                counter += 1
-        elif (counter % 2 == 1):
-            if (char == ";"):
-                counter += 1
-                tmp_bt.MAC = tmp
-                elemcounter += 1
-                tmp = ""
-            else:
-                tmp += char
-        elif (counter % 2 == 0):
-            if (char == ";"):
-                counter += 1
-                if (int == 1):
-                    tmp_bt.RSSI = FingerprintAssembly.delog(float(tmp))
-                elif (int == 2):
-                    tmp_bt.RSSI = float(tmp)
-                elemcounter += 1
-                tmp = ""
-            else:
-                tmp += char
-        if (elemcounter != 0 and elemcounter % 2 == 0):
-            FP.wlans.append(tmp_bt)
-            tmp_bt.MAC = ""
-            tmp_bt.RSSI = 0.0
-    return FP
+def set_bt_data(fp, line, num):
+    arr_line = line.split(";")
+    counter = 1
+    while ((counter + 1) < len(arr_line)):
+        tmp_bt = BT.BT()
+        tmp_bt.MAC = arr_line[counter]
+        if (num == 1):
+            tmp_bt.RSSI = FingerprintAssembly.delog(float(arr_line[counter + 1]))
+        elif (num == 2):
+            tmp_bt.RSSI = float(arr_line[counter + 1])
+        counter += 2
+        fp.bts.append(tmp_bt)
+        del tmp_bt
+    return fp
 
 
 # function to set the measured values of Cell. Called with the fingerprint FP, the line string and an int for: 1:storation, 2:restoration. Returning the fingerprint with new data added
-def set_cell_data(FP, line, int):
-    tmp_cell = Cell()
-    tmp = ""
-    counter = 0
-    elemcounter = 0
-    for char in line:
-        if (counter == 0):
-            if (char == ";"):
-                counter += 1
-        elif (counter % 2 == 1):
-            if (char == ";"):
-                counter += 1
-                tmp_cell.typeID = tmp
-                elemcounter += 1
-                tmp = ""
-            else:
-                tmp += char
-        elif (counter % 2 == 0):
-            if (char == ";"):
-                counter += 1
-                if (int == 1):
-                    tmp_cell.RSRP = FingerprintAssembly.delog(float(tmp))
-                elif (int == 2):
-                    tmp_cell.RSRP = float(tmp)
-                elemcounter += 1
-                tmp = ""
-            else:
-                tmp += char
-        if (elemcounter != 0 and elemcounter % 2 == 0):
-            FP.wlans.append(tmp_cell)
-            tmp_cell.typeID = ""
-            tmp_cell.RSRP = 0.0
-    return FP
+def set_cell_data(fp, line, num):
+    arr_line = line.split(";")
+    counter = 1
+    while ((counter + 1) < len(arr_line)):
+        tmp_cell = Cell.Cell()
+        tmp_cell.typeID = arr_line[counter]
+        if (num == 1):
+            tmp_cell.RSRP = FingerprintAssembly.delog(float(arr_line[counter + 1]))
+        elif (num == 2):
+            tmp_cell.RSRP = float(arr_line[counter + 1])
+        counter += 2
+        fp.cells.append(tmp_cell)
+        del tmp_cell
+    return fp
 
 
 # end help functions

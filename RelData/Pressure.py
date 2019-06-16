@@ -20,27 +20,41 @@
 # class for measured Pressure data,
 # such as the sensor event value as float
 
-def getRelData(line):
+# def getRelData(line):
+#     rel_data_press = ""
+#     # go through line and save relevant data in new string
+#     print(line)
+#     counter = 1
+#     tmp = ""
+#     for char in line:
+#         if (
+#                 counter == 2 or counter == 3):
+#             if (char == ";"):
+#                 counter += 1
+#         else:
+#             if (char == ";"):
+#                 counter += 1
+#                 tmp += char
+#                 rel_data_press += tmp
+#                 tmp = ""
+#             elif (char == "\n"):
+#                 counter += 1
+#                 rel_data_press += tmp
+#                 tmp = ""
+#             else:
+#                 tmp += char
+#     return rel_data_press
+
+def get_rel_data(line):
     rel_data_press = ""
     # go through line and save relevant data in new string
     print(line)
-    counter = 1
-    tmp = ""
-    for char in line:
-        if (
-                counter == 2 or counter == 3):
-            if (char == ";"):
-                counter += 1
-        else:
-            if (char == ";"):
-                counter += 1
-                tmp += char
-                rel_data_press += tmp
-                tmp = ""
-            elif (char == "\n"):
-                counter += 1
-                rel_data_press += tmp
-                tmp = ""
-            else:
-                tmp += char
-    return rel_data_press
+    arr_line = line.split(";")
+    counter = 3
+    rel_data_press += arr_line[0]
+    rel_data_press += ";"
+    while(counter < len(arr_line)):
+        rel_data_press += arr_line[counter]
+        rel_data_press += ";"
+        counter += 1
+    return rel_data_press[:-1]
