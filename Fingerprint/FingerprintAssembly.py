@@ -58,6 +58,12 @@ def find_min_time(w_line, b_line, c_line):
 
 def find_max_time(w_line, b_line, c_line):
     max_time = max(int(w_line[:13]), int(b_line[:13]), int(c_line[:13]))
+    # catch empty data lines with dummy timestamp and set max_time to relevant timestamp
+    if (max_time == 9999999999999):
+        tmp = [int(w_line[:13]), int(b_line[:13]), int(c_line[:13])]
+        while (9999999999999 in tmp):
+            tmp.remove(9999999999999)
+        max_time = max(tmp)
     return max_time
 
 
@@ -83,12 +89,12 @@ def find_index(time, diff, arr):
 # main function to assemble a fingerprint
 def assemble_fingerprint():
     # read data from files: WLAN, BT, Cells
-    # wlan_file_path = select_file_path("WLAN")
-    wlan_file_path = "E:/Clara/Studium/Master/MA/Datenverarbeitung/20190519_Verarbeitungskette/20190616_Test_Fingerprint_Assembly/User_Hand_1306191731499629_WiFi__154358522871920__0.csv"
-    # bt_file_path = select_file_path("BT")
-    bt_file_path = "E:/Clara/Studium/Master/MA/Datenverarbeitung/20190519_Verarbeitungskette/20190616_Test_Fingerprint_Assembly/User_Hand_1306191731499629_Bluetooth__154358544046191__0.csv"
-    # cell_file_path = select_file_path("Cell")
-    cell_file_path = "E:/Clara/Studium/Master/MA/Datenverarbeitung/20190519_Verarbeitungskette/20190616_Test_Fingerprint_Assembly/User_Hand_1306191731499629_Cells__154358527039733__0.csv"
+    wlan_file_path = select_file_path("WLAN")
+    # wlan_file_path = "E:/Clara/Studium/Master/MA/Datenverarbeitung/20190519_Verarbeitungskette/20190616_Test_Fingerprint_Assembly/User_Hand_1306191731499629_WiFi__154358522871920__0.csv"
+    bt_file_path = select_file_path("BT")
+    # bt_file_path = "E:/Clara/Studium/Master/MA/Datenverarbeitung/20190519_Verarbeitungskette/20190616_Test_Fingerprint_Assembly/User_Hand_1306191731499629_Bluetooth__154358544046191__0.csv"
+    cell_file_path = select_file_path("Cell")
+    # cell_file_path = "E:/Clara/Studium/Master/MA/Datenverarbeitung/20190519_Verarbeitungskette/20190616_Test_Fingerprint_Assembly/User_Hand_1306191731499629_Cells__154358527039733__0.csv"
 
     # open source files
     wlan_file = open(wlan_file_path, "r")
@@ -111,8 +117,6 @@ def assemble_fingerprint():
     for cell_line in cell_lines:
         arr_cell_lines.append(cell_line)
 
-    # TODO: logic for matching fingerprint data of different sensors together
-
     # check if lines of each sensor are properly sorted, if not: sort them
     arr_wlan_lines.sort(key=take_time)
     arr_bt_lines.sort(key=take_time)
@@ -120,19 +124,22 @@ def assemble_fingerprint():
     # Counter for number of relevant fingerprints:
     fp_counter = max(len(arr_wlan_lines), len(arr_bt_lines), len(arr_cell_lines))
 
+    # make sure, every data array has the same length to avoid errors while parsing
+    while (len(arr_wlan_lines) < fp_counter):
+        arr_wlan_lines.append("9999999999999")
+    while (len(arr_bt_lines) < fp_counter):
+        arr_bt_lines.append("9999999999999")
+    while (len(arr_cell_lines) < fp_counter):
+        arr_cell_lines.append("9999999999999")
+
     # store data in data structure
     pos_id = set_pos_id()
 
     arr_fp = []
-    # min_time = 0
-    # max_time = 0
     for i in range(0, fp_counter):
         # take first lines of w, b, c and find out, which timestamp is the smallest, save them in list to sort?
         # therefor extraction of timestamps (13 digits) needed
         # set min_time = smallest timestamp of 1st sensor
-        # print("WLAN: ", arr_wlan_lines[0])
-        # print("BT: ", arr_bt_lines[0])
-        # print("Cell: ", arr_cell_lines[0])
         min_time = find_min_time(arr_wlan_lines[0], arr_bt_lines[0], arr_cell_lines[0])
         arr = find_time(min_time, 0, arr_wlan_lines, arr_bt_lines, arr_cell_lines)
 
@@ -140,7 +147,6 @@ def assemble_fingerprint():
         if (len(arr) >= 2):
             help_time = int(arr[1][:13])
             diff = help_time - min_time
-            # print(diff)
 
         # check if timestamps of sensors are in between 1st and 2nd timestamp of reference sensor
         # take data of all sensors which is between 1st and 2nd timestamp of reference sensor as start point for fingerprint assembly
@@ -176,7 +182,5 @@ def assemble_fingerprint():
             del arr_cell_lines[c_arr_index]
         arr_fp.append(fp)
         # print(arr_fp[i])
-        # min_time = 0
-        # max_time = 0
 
     FingerprintStorage.store_fingerprint(arr_fp)

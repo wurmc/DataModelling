@@ -103,10 +103,10 @@ def restore_fp():
     fp_lines = fp_file.readlines()
     counter = 0
     for line in fp_lines:
-        fp = Fingerprint.Fingerprint()
-        if (line.find("fp") != -1):
+        if (line.find("FP") != -1):
+            fp = Fingerprint.Fingerprint()
             # store metadata in right structure
-            fp = set_meta_data(fp)
+            fp = set_meta_data(fp, line)
             counter += 1
         elif (line.find("WLAN") != -1):
             # store WLAN data in right structure
@@ -116,9 +116,11 @@ def restore_fp():
             # store BT data in right structure
             fp = set_bt_data(fp, line, 2)
             counter += 1
-        elif (line.find() != -1):
+        elif (line.find("Cell") != -1):
             # store Cell data in right structure
             fp = set_cell_data(fp, line, 2)
             counter += 1
         if (counter != 0 and counter % 4 == 0):
             arr_fps.append(fp)
+            del fp
+    return arr_fps

@@ -44,28 +44,34 @@ def store_fingerprint(arr_fp):
 
         # append WLAN data to file
         fp_file.write("WLAN;")
-        for wlan in fp.wlans:
+        for count, wlan in enumerate(fp.wlans, start=1):
             fp_file.write(wlan.BSSID)
             fp_file.write(";")
             fp_file.write(str(wlan.RSSI))
-            fp_file.write(";")
+            # if wlan is last element of wlans, don't write ";"
+            if (count != len(fp.wlans)):
+                fp_file.write(";")
         fp_file.write("\n")
 
         # append BT data to file
         fp_file.write("BT;")
-        for bt in fp.bts:
+        for count, bt in enumerate(fp.bts, start=1):
             fp_file.write(bt.MAC)
             fp_file.write(";")
             fp_file.write(str(bt.RSSI))
-            fp_file.write(";")
+            # if bt is last element of bts, don't write ";"
+            if (count != len(fp.bts)):
+                fp_file.write(";")
         fp_file.write("\n")
 
         # append Cell data to file
         fp_file.write("Cell;")
-        for cell in fp.cells:
+        for count, cell in enumerate(fp.cells, start=1):
             fp_file.write(cell.typeID)
             fp_file.write(";")
             fp_file.write(str(cell.RSRP))
-            fp_file.write(";")
+            # if cell is last element of cells, don't write ";"
+            if (count != len(fp.cells)):
+                fp_file.write(";")
         fp_file.write("\n")
     fp_file.close()

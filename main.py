@@ -30,7 +30,7 @@ while (x != 0):
                   "\n1: Select relevant data from measured sensor data,  \n2: Assemble Fingerprint with linear values, "
                   "\n3: Calculate distance between two data sets of relevant data"))
     # error for invalid input
-    if (x >= 3):
+    if (x > 3):
         print("Invalid input. Please enter int from 0 to 4.")
 
     # handling of different options
@@ -39,4 +39,4 @@ while (x != 0):
     elif (x == 2):
         FingerprintAssembly.assemble_fingerprint()
     elif (x == 3):
-        DistanceCalculation
+        DistanceCalculation.calculate_distance()
