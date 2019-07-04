@@ -130,7 +130,7 @@ def save_dist(arr_d):
     file = open(file_path, "w")
     for d in arr_d:
         file.write(str(d))
-        file.write(";")
+        file.write("\n")
     print("File written!")
 
 
@@ -156,7 +156,7 @@ def calculate_distance():
         # compare number of data fields in fingerprint
         n_x = (len(x_fp.wlans) * 2) + (len(x_fp.bts) * 2) + (len(x_fp.cells) * 2)
         n_y = (len(y_fp.wlans) * 2) + (len(y_fp.bts) * 2) + (len(y_fp.cells) * 2)
-        n_max = max(n_x, n_y)
+        n_max = n_x + n_y
 
         # calculate distance out of differences
         d = (1 / n_max) * calc_diff(x_fp, y_fp)

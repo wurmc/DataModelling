@@ -147,6 +147,7 @@ def assemble_fingerprint():
         if (len(arr) >= 2):
             help_time = int(arr[1][:13])
             diff = help_time - min_time
+            print(diff)
 
         # check if timestamps of sensors are in between 1st and 2nd timestamp of reference sensor
         # take data of all sensors which is between 1st and 2nd timestamp of reference sensor as start point for fingerprint assembly
