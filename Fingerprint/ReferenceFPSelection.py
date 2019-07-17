@@ -17,30 +17,37 @@
 #  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 #  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# contains all function calls and main functionality to structure the project
+# functionality to select one reference fp out of given set of fingerprints
 
-from RelData import RelDataSelection
-from Fingerprint import FingerprintAssembly
+from Fingerprint import Fingerprint
+from Distance import FingerprintRestoration
+from Fingerprint import AvgFPBuild
 from Distance import DistanceCalculation
-from Fingerprint import ReferenceFPSelection
+from Fingerprint import FingerprintStorage
 
-# main menu for calling different functionality in while loop
-x = 404
-while (x != 0):
-    x = int(input("Please enter an integer from 0 to 4 for the following choices: \n0: exit and stop program, "
-                  "\n1: Select relevant data from measured sensor data,  \n2: Assemble Fingerprint with linear values, "
-                  "\n3: Select reference Fingerprint by creating an artificial average FIngerprint for one position, "
-                  "\n4: Calculate distance between two data sets of relevant data"))
-    # error for invalid input
-    if (x > 4):
-        print("Invalid input. Please enter int from 0 to 4.")
 
-    # handling of different options
-    if (x == 1):
-        RelDataSelection.select_rel_data()
-    elif (x == 2):
-        FingerprintAssembly.assemble_fingerprint()
-    elif (x == 3):
-        ReferenceFPSelection.select_reference_fp()
-    elif(x == 4):
-        DistanceCalculation.start_distance_calc()
+# managing of reference fp selection
+def select_reference_fp():
+    ref_fp = Fingerprint.Fingerprint()
+    # restore fingerprints from saved csv
+    arr_fps = FingerprintRestoration.restore_fp()
+
+    # call avg fp build with arr_fps in avg_fp
+    avg_fp = AvgFPBuild.build_avg_fp(arr_fps)
+
+    # call distance calc with avg_fp and arr_fps in arr_dist
+    arr_dist = []
+    arr_index = []
+    for o_fp in arr_fps:
+        arr_dist.append(DistanceCalculation.calculate_distance(avg_fp, o_fp))
+        arr_index.append(arr_fps.index(o_fp))
+
+    # find minimal distance of arr_dist including index of original fp, set reference fp with original fp
+    min_dist = min(arr_dist)
+    ind = arr_dist.index(min_dist)
+    ref_fp = arr_fps[ind]
+
+    # save original fp as reference fp in csv file
+    tmp_arr_fp = []
+    tmp_arr_fp.append(ref_fp)
+    FingerprintStorage.store_fingerprint(tmp_arr_fp)

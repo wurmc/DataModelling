@@ -37,7 +37,7 @@ def find_set_intersect(x_set, y_set):
 
 # calculate the sum of sifferences between fingerprints
 def calc_diff(x_fp, y_fp):
-    # initialisations
+    # initializations
     diff_sum = 0.0
     x_set_wlan = set()
     x_set_bt = set()
@@ -125,17 +125,21 @@ def calc_diff(x_fp, y_fp):
 
 
 # save the distance array in csv file
-def save_dist(arr_d):
+def save_dist(arr_d, x_arr_index, y_arr_index):
     file_path = str(input("Where shall the distances be saved?"))
     file = open(file_path, "w")
-    for d in arr_d:
+    for d, x, y in zip(arr_d, x_arr_index, y_arr_index):
+        file.write(str(x))
+        file.write(";")
+        file.write(str(y))
+        file.write(";")
         file.write(str(d))
         file.write("\n")
     print("File written!")
 
 
 # clculate distance between fingerprints
-def calculate_distance():
+def start_distance_calc():
     # restore fingerprints from saved csv
     x_arr_fps = FingerprintRestoration.restore_fp()
     y_arr_fps = FingerprintRestoration.restore_fp()
@@ -146,29 +150,40 @@ def calculate_distance():
 
     # initialise array for distances
     arr_d = []
+    x_arr_index = []
+    y_arr_index = []
 
     # go through fingerprint arrays
-    for x_fp, y_fp in zip(x_arr_fps, y_arr_fps):
-        n_x = 0
-        n_y = 0
-        n_max = 0
-        d = 0.0
-        # compare number of data fields in fingerprint
-        n_x = (len(x_fp.wlans) * 2) + (len(x_fp.bts) * 2) + (len(x_fp.cells) * 2)
-        n_y = (len(y_fp.wlans) * 2) + (len(y_fp.bts) * 2) + (len(y_fp.cells) * 2)
-        n_max = n_x + n_y
-
-        # calculate distance out of differences
-        d = (1 / n_max) * calc_diff(x_fp, y_fp)
-        arr_d.append(d)
-        # print calculated distances
-        print(x_fp)
-        print(y_fp)
-        print("The distance between the two fingerprints is: " + str(d))
-        del n_x
-        del n_y
-        del n_max
-        del d
+    for x_fp in x_arr_fps:
+        for y_fp in y_arr_fps:
+            d = calculate_distance(x_fp, y_fp)
+            arr_d.append(d)
+            x_arr_index.append(x_arr_fps.index(x_fp))
+            y_arr_index.append(y_arr_fps.index(y_fp))
 
     # save calculated distances in csv file
-    save_dist(arr_d)
+    save_dist(arr_d, x_arr_index, y_arr_index)
+
+
+def calculate_distance(x_fp, y_fp):
+    # initializations
+    n_x = 0
+    n_y = 0
+    n_max = 0
+    d = 0.0
+    # compare number of data fields in fingerprint
+    n_x = (len(x_fp.wlans) * 2) + (len(x_fp.bts) * 2) + (len(x_fp.cells) * 2)
+    n_y = (len(y_fp.wlans) * 2) + (len(y_fp.bts) * 2) + (len(y_fp.cells) * 2)
+    n_max = n_x + n_y
+
+    # calculate distance out of differences
+    d = (1 / n_max) * calc_diff(x_fp, y_fp)
+
+    # print calculated distances
+    print(x_fp)
+    print(y_fp)
+    print("The distance between the two fingerprints is: " + str(d))
+    # del n_x
+    # del n_y
+    # del n_max
+    return d
