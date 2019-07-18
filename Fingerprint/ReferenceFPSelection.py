@@ -40,7 +40,10 @@ def select_reference_fp():
     arr_index = []
     for o_fp in arr_fps:
         arr_dist.append(DistanceCalculation.calculate_distance(avg_fp, o_fp))
-        arr_index.append(arr_fps.index(o_fp))
+        arr_index.append(arr_fps.index(o_fp) + 1)
+
+    # save distances including indices in file
+    DistanceCalculation.save_dist(arr_dist, arr_index, arr_index)
 
     # find minimal distance of arr_dist including index of original fp, set reference fp with original fp
     min_dist = min(arr_dist)

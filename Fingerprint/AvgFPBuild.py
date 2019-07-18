@@ -44,36 +44,71 @@ def build_avg_fp(arr_fps):
     avg_fp.minTime = arr_fps[0].minTime
     avg_fp.maxTime = arr_fps[-1].maxTime
 
-    # set sensor data of avg fp
+    # set resource sensor data for avg fp
     arr_wlans = []
     arr_bts = []
     arr_cells = []
-
     for o_fp in arr_fps:
         for o_wlan in o_fp.wlans:
             x = find_index(o_wlan.BSSID, arr_wlans)
             if (x == -1):
-                base_wlan = AvgBase.AvgBase(o_wlan.BSSID, o_wlan.RSSI)
+                base_wlan = AvgBase.AvgBase(o_wlan.BSSID)
+                base_wlan.signals.append(o_wlan.RSSI)
                 arr_wlans.append(base_wlan)
                 del base_wlan
             else:
-                arr_wlans[x].signals.append(o_wlan)
+                arr_wlans[x].signals.append(o_wlan.RSSI)
         for o_bt in o_fp.bts:
-            x = find_index(o_bt.BSSID, arr_bts)
+            x = find_index(o_bt.MAC, arr_bts)
             if (x == -1):
-                base_bt = AvgBase.AvgBase(o_bt.MAC, o_bt.RSSI)
-                arr_wlans.append(base_bt)
+                base_bt = AvgBase.AvgBase(o_bt.MAC)
+                base_bt.signals.append(o_bt.RSSI)
+                arr_bts.append(base_bt)
                 del base_bt
             else:
-                arr_bts[x].signals.append(o_bt)
+                arr_bts[x].signals.append(o_bt.RSSI)
         for o_cell in o_fp.cells:
-            x = find_index(o_cell.BSSID, arr_cells)
+            x = find_index(o_cell.typeID, arr_cells)
             if (x == -1):
-                base_cell = AvgBase.AvgBase(o_cell.typeID, o_cell.RSRP)
+                base_cell = AvgBase.AvgBase(o_cell.typeID)
+                base_cell.signals.append(o_cell.RSRP)
                 arr_cells.append(base_cell)
                 del base_cell
             else:
-                arr_cells[x].signals.append(o_cell)
+                arr_cells[x].signals.append(o_cell.RSRP)
+
+    # # help function to create histograms of sensor data
+    # w_name = "E:/Clara/Studium/Master/MA/Messungen/20190625_FP_Referenz/4Flur/Mi9/20190625_D14-4Hall-11_WLAN_signals.csv"
+    # b_name = "E:/Clara/Studium/Master/MA/Messungen/20190625_FP_Referenz/4Flur/Mi9/20190625_D14-4Hall-11_BT_signals.csv"
+    # c_name = "E:/Clara/Studium/Master/MA/Messungen/20190625_FP_Referenz/4Flur/Mi9/20190625_D14-4Hall-11_Cell_signals.csv"
+    #
+    # w_file = open(w_name, 'w')
+    # b_file = open(b_name, 'w')
+    # c_file = open(c_name, 'w')
+    # for w_item in arr_wlans:
+    #     w_file.write(w_item.id)
+    #     w_file.write(';')
+    #     for w_sig in w_item.signals:
+    #         w_file.write(str(w_sig))
+    #         w_file.write(';')
+    #     w_file.write('\n')
+    # for b_item in arr_bts:
+    #     b_file.write(b_item.id)
+    #     b_file.write(';')
+    #     for b_sig in b_item.signals:
+    #         b_file.write(str(b_sig))
+    #         b_file.write(';')
+    #     b_file.write('\n')
+    # for c_item in arr_cells:
+    #     c_file.write(c_item.id)
+    #     c_file.write(';')
+    #     for c_sig in c_item.signals:
+    #         c_file.write(str(c_sig))
+    #         c_file.write(';')
+    #     c_file.write('\n')
+    # w_file.close()
+    # b_file.close()
+    # c_file.close()
 
     # find avg of every wlan, bt, cell signal
     for wlan_base in arr_wlans:

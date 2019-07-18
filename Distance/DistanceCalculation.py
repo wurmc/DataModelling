@@ -50,7 +50,7 @@ def calc_diff(x_fp, y_fp):
     for x_wlan in x_fp.wlans:
         x_set_wlan.add(x_wlan.BSSID)
     for y_wlan in y_fp.wlans:
-        y_set_wlan.add(x_wlan.BSSID)
+        y_set_wlan.add(y_wlan.BSSID)
 
     # calculate differences for number of fields
     diff_set_wlan = find_set_diff(x_set_wlan, y_set_wlan)  # for every sensor
@@ -158,8 +158,8 @@ def start_distance_calc():
         for y_fp in y_arr_fps:
             d = calculate_distance(x_fp, y_fp)
             arr_d.append(d)
-            x_arr_index.append(x_arr_fps.index(x_fp))
-            y_arr_index.append(y_arr_fps.index(y_fp))
+            x_arr_index.append(x_arr_fps.index(x_fp) + 1)
+            y_arr_index.append(y_arr_fps.index(y_fp) + 1)
 
     # save calculated distances in csv file
     save_dist(arr_d, x_arr_index, y_arr_index)
@@ -180,10 +180,8 @@ def calculate_distance(x_fp, y_fp):
     d = (1 / n_max) * calc_diff(x_fp, y_fp)
 
     # print calculated distances
-    print(x_fp)
-    print(y_fp)
-    print("The distance between the two fingerprints is: " + str(d))
-    # del n_x
-    # del n_y
-    # del n_max
+    # print(x_fp)
+    # print(y_fp)
+    # print("The distance between the two fingerprints is: " + str(d))
+
     return d
