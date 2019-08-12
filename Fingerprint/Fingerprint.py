@@ -19,10 +19,6 @@
 
 # class for fingerprint data structure
 
-from .SensorData import WLAN
-from .SensorData import BT
-from .SensorData import Cell
-
 
 class Fingerprint:
     """Fingerprint class"""

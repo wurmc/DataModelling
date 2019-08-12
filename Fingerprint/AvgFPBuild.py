@@ -27,6 +27,7 @@ from Fingerprint import AvgBase
 import statistics
 
 
+# return index of searched id
 def find_index(string, list):
     for x in list:
         if (x.id == string):
@@ -35,6 +36,7 @@ def find_index(string, list):
     return -1
 
 
+# function to build and return the avg fp
 def build_avg_fp(arr_fps):
     avg_fp = Fingerprint.Fingerprint()
 
@@ -78,6 +80,7 @@ def build_avg_fp(arr_fps):
                 arr_cells[x].signals.append(o_cell.RSRP)
 
     # # help function to create histograms of sensor data
+    # # save all sensor data of one position in a csv file for each sensor
     # w_name = "E:/Clara/Studium/Master/MA/Messungen/20190625_FP_Referenz/4Flur/Mi9/20190625_D14-4Hall-11_WLAN_signals.csv"
     # b_name = "E:/Clara/Studium/Master/MA/Messungen/20190625_FP_Referenz/4Flur/Mi9/20190625_D14-4Hall-11_BT_signals.csv"
     # c_name = "E:/Clara/Studium/Master/MA/Messungen/20190625_FP_Referenz/4Flur/Mi9/20190625_D14-4Hall-11_Cell_signals.csv"

@@ -17,6 +17,8 @@
 #  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 #  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+# functionality to restore fingerprints from csv file
+
 from Fingerprint import Fingerprint
 from Fingerprint import FingerprintAssembly
 from Fingerprint.SensorData import WLAN
@@ -24,12 +26,13 @@ from Fingerprint.SensorData import BT
 from Fingerprint.SensorData import Cell
 
 
-# start help functions
+# request of file path from user
 def select_file_path():
     file_path = str(input("Please enter the absolute Path of the fingerprint csv file you want to restore:"))
     return file_path
 
 
+# set meta data of fp
 def set_meta_data(fp, line):
     arr_line = line.split(";")
     fp.posID = arr_line[1]
@@ -39,7 +42,9 @@ def set_meta_data(fp, line):
     return fp
 
 
-# function to set the measured values of WLAN. Called with the fingerprint FP, the line string and an int for: 1:storation, 2:restoration. Returning the fingerprint with new data added
+# function to set the measured values of WLAN.
+# Called with the fingerprint FP, the line string and an int for: 1:storation, 2:restoration.
+# Returning the fingerprint with new data added
 def set_wlan_data(fp, line, num):
     arr_line = line.split(";")
     counter = 1
@@ -56,7 +61,9 @@ def set_wlan_data(fp, line, num):
     return fp
 
 
-# function to set the measured values of BT. Called with the fingerprint FP, the line string and an int for: 1:storation, 2:restoration. Returning the fingerprint with new data added
+# function to set the measured values of BT.
+# Called with the fingerprint FP, the line string and an int for: 1:storation, 2:restoration.
+# Returning the fingerprint with new data added
 def set_bt_data(fp, line, num):
     arr_line = line.split(";")
     counter = 1
@@ -73,7 +80,9 @@ def set_bt_data(fp, line, num):
     return fp
 
 
-# function to set the measured values of Cell. Called with the fingerprint FP, the line string and an int for: 1:storation, 2:restoration. Returning the fingerprint with new data added
+# function to set the measured values of Cell.
+# Called with the fingerprint FP, the line string and an int for: 1:storation, 2:restoration.
+# Returning the fingerprint with new data added
 def set_cell_data(fp, line, num):
     arr_line = line.split(";")
     counter = 1
@@ -89,8 +98,6 @@ def set_cell_data(fp, line, num):
         del tmp_cell
     return fp
 
-
-# end help functions
 
 # function to restore a fingerprint from a csv file
 def restore_fp():

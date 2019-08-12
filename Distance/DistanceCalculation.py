@@ -35,7 +35,7 @@ def find_set_intersect(x_set, y_set):
     return inter_set  # prep for calc float diff for matched fields
 
 
-# calculate the sum of sifferences between fingerprints
+# calculate the sum of differences between fingerprints
 def calc_diff(x_fp, y_fp):
     # initializations
     diff_sum = 0.0
@@ -138,7 +138,7 @@ def save_dist(arr_d, x_arr_index, y_arr_index):
     print("File written!")
 
 
-# clculate distance between fingerprints
+# calculate distance between fingerprint lists
 def start_distance_calc():
     # restore fingerprints from saved csv
     x_arr_fps = FingerprintRestoration.restore_fp()
@@ -178,10 +178,5 @@ def calculate_distance(x_fp, y_fp):
 
     # calculate distance out of differences
     d = (1 / n_max) * calc_diff(x_fp, y_fp)
-
-    # print calculated distances
-    # print(x_fp)
-    # print(y_fp)
-    # print("The distance between the two fingerprints is: " + str(d))
 
     return d

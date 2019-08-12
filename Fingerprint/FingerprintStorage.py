@@ -17,14 +17,14 @@
 #  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 #  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# start of help functions
+# functionality to store fingerprints into csv file
+
+# request path to store fingerprints at from user
 def set_file_path():
     file_path = str(input(
         "Please enter absolute file path including the name of the file you want to create for storing the fingerprints: "))
     return file_path
 
-
-# end of help functions
 
 # function to store the fingerprint in a csv file
 def store_fingerprint(arr_fp):

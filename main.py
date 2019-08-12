@@ -28,9 +28,10 @@ from Fingerprint import ReferenceFPSelection
 x = 404
 while (x != 0):
     x = int(input("Please enter an integer from 0 to 4 for the following choices: \n0: exit and stop program, "
-                  "\n1: Select relevant data from measured sensor data,  \n2: Assemble Fingerprint with linear values, "
-                  "\n3: Select reference Fingerprint by creating an artificial average FIngerprint for one position, "
-                  "\n4: Calculate distance between two data sets of relevant data"))
+                  "\n1: Select relevant data from measured sensor data and store it into a csv file,  "
+                  "\n2: Assemble fingerprints with linear values and store it into a csv file, "
+                  "\n3: Select reference fingerprint by creating a fictional average fingerprint for one position and store it into a csv file, "
+                  "\n4: Calculate distance between two sets of relevant data (lists of fingerprints)"))
     # error for invalid input
     if (x > 4):
         print("Invalid input. Please enter int from 0 to 4.")

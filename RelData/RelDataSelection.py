@@ -17,9 +17,7 @@
 #  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 #  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# TODO:
-# create public 2-dimensional array
-# with columns for every data of sensors to list their measured data in rows
+# functionality to select relevant data of every sensor in a csv file
 
 from RelData import Bluetooth
 from RelData import Cell
@@ -31,7 +29,7 @@ from RelData import Pressure
 from RelData import Satellite
 from RelData import WLAN
 
-# Help functions:
+
 # create function, which asks user for choice of file including the absolute path of it
 def select_ex_file():
     existing_file_path = str(
@@ -39,13 +37,14 @@ def select_ex_file():
     return existing_file_path
 
 
+# request file path of new file from user
 def select_new_file():
     new_file_path = str(
         input("Please enter the absolute path of the new file you want to work with (use / not win \): "))
     return new_file_path
 
 
-# create function, which asks user for choice of sensor
+# ask user for choice of sensor
 def choose_sensor(x):
     while (x < 1 or x > 9):
         x = int(input(
@@ -53,7 +52,7 @@ def choose_sensor(x):
     return x
 
 
-# create function, which calls the get_rel_data method of the sensor
+# call the get_rel_data method of the sensor
 def select_sensor(x, line):
     if (x == 1):
         rel_data_tmp = Bluetooth.get_rel_data(line)
@@ -90,11 +89,9 @@ def select_rel_data():
     new_file_path = select_new_file()
 
     # open existing txt file to read from
-    # ex_file_path = "E:/Clara/Studium/Master/MA/20190519_Verarbeitungskette/test_BT.txt"
     ef = open(ex_file_path, "r")
 
     # open new csv file to write in with adaptet path and same name
-    # new_file_path = "E:/Clara/Studium/Master/MA/20190519_Verarbeitungskette/neu/test_BT.csv"
     nf = open(new_file_path, "w")
 
     # ask user for choice of sensor
@@ -107,8 +104,6 @@ def select_rel_data():
     # read data from txt files line by line
     ef_lines = ef.readlines()
     for line in ef_lines:
-        # print(line);
-
         # call specific sensor to select and return relevant data
         rel_data = select_sensor(x, line)
 

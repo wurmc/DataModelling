@@ -17,97 +17,8 @@
 #  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 #  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# class for measured Cell data,
+# functionality to filter for relevant Cell data
 # such as the type (LTE etc.), the PCI and related RSRP
-
-# def get_rel_data(line):
-#     rel_data_cell = ""
-#     # go through line and save relevant data in new string
-#     print(line)
-#     counter = 1
-#     counter2 = 0
-#     tmp = ""
-#     tmp2 = ""
-#     for char in line:
-#         if (
-#                 counter == 2 or counter == 3 or counter == 4):
-#             if (char == ";"):
-#                 counter += 1
-#         elif (counter == 5 or counter == 22 or counter == 39 or counter == 56 or counter == 73 or counter == 90 or
-#               counter == 107 or counter == 124 or counter == 141 or counter == 158):
-#             if (tmp == "GSM"):
-#                 tmp2 = tmp
-#                 counter2 = counter
-#                 counter += 1
-#                 rel_data_cell += tmp
-#                 tmp = ""
-#             elif (tmp == "CDMA"):
-#                 tmp2 = tmp
-#                 counter2 = counter
-#                 counter += 1
-#                 rel_data_cell += tmp
-#                 tmp = ""
-#             elif (tmp == "LTE"):
-#                 tmp2 = tmp
-#                 counter2 = counter
-#                 counter += 1
-#                 rel_data_cell += tmp
-#                 tmp = ""
-#             elif (tmp == "WCDMA"):
-#                 tmp2 = tmp
-#                 counter2 = counter
-#                 counter += 1
-#                 rel_data_cell += tmp
-#                 tmp = ""
-#             else:
-#                 tmp += char
-#         else:
-#             if (char == ";"):
-#                 if (tmp2 == "GSM"):
-#                     if (counter == counter2 + 2 or counter == counter2 + 7):
-#                         counter += 1
-#                         tmp += char
-#                         rel_data_cell += tmp
-#                         tmp = ""
-#                     else:
-#                         counter += 1
-#                         tmp = ""
-#                 elif (tmp2 == "CDMA"):
-#                     if (counter == counter2 + 2 or counter == counter2 + 11):
-#                         counter += 1
-#                         tmp += char
-#                         rel_data_cell += tmp
-#                         tmp = ""
-#                     else:
-#                         counter += 1
-#                         tmp = ""
-#                 elif (tmp2 == "LTE"):
-#                     if (counter == counter2 + 5 or counter == counter2 + 8):
-#                         counter += 1
-#                         tmp += char
-#                         rel_data_cell += tmp
-#                         tmp = ""
-#                     else:
-#                         counter += 1
-#                         tmp = ""
-#                 elif (tmp2 == "WCDMA"):
-#                     if (counter == counter2 + 2 or counter == counter2 + 8):
-#                         counter += 1
-#                         tmp += char
-#                         rel_data_cell += tmp
-#                         tmp = ""
-#                     else:
-#                         counter += 1
-#                         tmp = ""
-#                 else:
-#                     counter += 1
-#                     tmp += char
-#                     rel_data_cell += tmp
-#                     tmp = ""
-#             else:
-#                 tmp += char
-#     return rel_data_cell
-
 def get_rel_data(line):
     rel_data_cell = ""
     # go through line and save relevant data in new string
@@ -142,4 +53,5 @@ def get_rel_data(line):
             rel_data_cell += arr_line[counter + 8]
             rel_data_cell += ";"
         counter += 17
+    # return assembled string without last ;
     return rel_data_cell[:-1]

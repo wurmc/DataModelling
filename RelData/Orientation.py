@@ -17,30 +17,8 @@
 #  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 #  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# class for measured Orientation data,
+# functionality to filter for relevant Orientation data
 # such as the quanternion value as float
-
-# def get_rel_data(line):
-#     rel_data_orient = ""
-#     # go through line and save relevant data in new string
-#     print(line)
-#     counter = 1
-#     tmp = ""
-#     for char in line:
-#         if (
-#                 counter == 2 or counter == 3):
-#             if (char == ";"):
-#                 counter += 1
-#         else:
-#             if (char == ";"):
-#                 counter += 1
-#                 tmp += char
-#                 rel_data_orient += tmp
-#                 tmp = ""
-#             else:
-#                 tmp += char
-#     return rel_data_orient
-
 def get_rel_data(line):
     rel_data_orient = ""
     # go through line and save relevant data in new string
@@ -49,8 +27,9 @@ def get_rel_data(line):
     counter = 3
     rel_data_orient += arr_line[0]
     rel_data_orient += ";"
-    while(counter < len(arr_line)):
+    while (counter < len(arr_line)):
         rel_data_orient += arr_line[counter]
         rel_data_orient += ";"
         counter += 1
+    # return assembled string without last ;
     return rel_data_orient[:-1]

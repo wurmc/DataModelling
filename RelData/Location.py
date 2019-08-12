@@ -17,31 +17,8 @@
 #  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 #  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# class for measured Location data,
+# functionality to filter for relevant Location data
 # such as the Latitude and the Longitude
-
-# def get_rel_data(line):
-#     rel_data_loc = ""
-#     # go through line and save relevant data in new string
-#     print(line)
-#     counter = 1
-#     tmp = ""
-#     for char in line:
-#         if (
-#                 counter == 2 or counter == 3 or counter == 4 or counter == 7):
-#             if (char == ";"):
-#                 counter += 1
-#         else:
-#             if (char == ";"):
-#                 counter += 1
-#                 tmp += char
-#                 rel_data_loc += tmp
-#                 tmp = ""
-#             else:
-#                 tmp += char
-#     return rel_data_loc
-
-
 def get_rel_data(line):
     rel_data_loc = ""
     # go through line and save relevant data in new string
@@ -56,4 +33,5 @@ def get_rel_data(line):
         rel_data_loc += arr_line[counter + 1]
         rel_data_loc += ";"
         counter += 3
+    # return assembled string without last ;
     return rel_data_loc[:-1]
